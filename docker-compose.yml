@@ -1,0 +1,12 @@
+services:
+  backend:
+    build: ./hello-world-backend
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build: ./hello-world-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
