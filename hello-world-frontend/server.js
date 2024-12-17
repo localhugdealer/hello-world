@@ -1,18 +1,18 @@
 const express = require('express');
-const axios = require('axios');
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
-app.get('/', async (req, res) => {
-  try {
-    const response = await axios.get('http://localhost:8000/api/hello');
-    res.send(`<h1>${response.data.message}</h1>`);
-  } catch (error) {
-    res.status(500).send('Error fetching data from backend');
-  }
+// Serve static files from the frontend directory
+app.use(express.static(path.join(__dirname, 'hello-world-frontend')));
+
+// Serve index.html on the root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'hello-world-frontend', 'index.html'));
 });
 
+// Start the server
 app.listen(port, () => {
-  console.log(`Frontend server running at http://localhost:${port}`);
+    console.log(`Frontend server running at http://localhost:${port}`);
 });
